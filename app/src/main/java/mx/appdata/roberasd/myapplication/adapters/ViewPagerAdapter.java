@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import mx.appdata.roberasd.myapplication.fragments.CameraFragment;
+import mx.appdata.roberasd.myapplication.fragments.CardViewFragment;
+import mx.appdata.roberasd.myapplication.fragments.CustomListViewFragment;
 import mx.appdata.roberasd.myapplication.fragments.ThreadFragment;
 
 /**
@@ -12,7 +14,8 @@ import mx.appdata.roberasd.myapplication.fragments.ThreadFragment;
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter{
 
-    private CharSequence mTtiles[] = {"Camara", "Hilos"};
+    private CharSequence mTtiles[] = {
+            "Camara", "Hilos", "Lista", "Card"};
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -20,15 +23,24 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        if(position == 0)
-            return CameraFragment.newInstance();
-        else
-            return ThreadFragment.newInstance();
+        switch (position){
+            case 0:
+                return CameraFragment.newInstance();
+            case 1:
+                return ThreadFragment.newInstance();
+            case 2:
+                return CustomListViewFragment.newInstance();
+            case 3:
+                return  CardViewFragment.newInstance();
+
+            default:
+                return CameraFragment.newInstance();
+        }
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 4;
     }
 
     @Override

@@ -30,9 +30,17 @@ public class MainActivity extends AppCompatActivity {
         Button mNuevaVentana = (Button)  findViewById(R.id.nuevaVentana);
 
         Button mStartSectionActivity = (Button)  findViewById(R.id.viewpagerButton);
+        Button mButtonMaps = (Button)  findViewById(R.id.buttonMaps);
 
         final EditText mMiTexto = (EditText)  findViewById(R.id.miEditText);
         final TextView mText = (TextView) findViewById(R.id.miTexto);
+
+        mButtonMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MapsActivity.class));
+            }
+        });
 
         mMiBoton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -31,8 +31,15 @@ import mx.appdata.roberasd.myapplication.R;
  */
 public class CameraFragment extends Fragment {
 
+    private static String MEDIA_DIRECTORY = "myFirtApp/media";
+    private static String TEMPORAL_PICTURE_NAME = "temporal.jpg";
+
+    private final static int CAMERA = 100;
     private final static int SELECT_PICTURE = 200;
+
     private ImageView mSetPicture;
+    private Bitmap mBitmap;
+    private String mDir;
 
     public static CameraFragment newInstance(){
         CameraFragment cameraFragment = new CameraFragment();
@@ -71,6 +78,7 @@ public class CameraFragment extends Fragment {
                             dialog.dismiss();
                     }
                 });
+                builder.show();
             }
         });
 
@@ -78,6 +86,18 @@ public class CameraFragment extends Fragment {
     }
 
     private void openCamera() {
+
+        File file = new File(Environment.getExternalStorageDirectory(), MEDIA_DIRECTORY);
+        file.mkdirs();
+
+        String path = Environment.getExternalStorageDirectory() + File.separator
+                + MEDIA_DIRECTORY + File.separator + TEMPORAL_PICTURE_NAME;
+        File newFile = new File(path);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(newFile));
+
+        startActivityForResult(intent, CAMERA);
 
     }
 
@@ -101,6 +121,17 @@ public class CameraFragment extends Fragment {
                     Uri path = data.getData();
                     mSetPicture.setImageURI(path);
                 }
+                break;
+            case CAMERA:
+                if(resultCode == Activity.RESULT_OK){
+                    mDir = Environment.getExternalStorageDirectory() + File.separator
+                            + MEDIA_DIRECTORY + File.separator + TEMPORAL_PICTURE_NAME;
+
+                    mBitmap = BitmapFactory.decodeFile(mDir);
+                    mSetPicture.setImageBitmap(mBitmap);
+                }
+
+                break;
         }
 
     }
